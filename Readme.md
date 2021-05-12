@@ -58,12 +58,12 @@ python gen_sa.py --create-sas -pid <project ID> -sp <prefix for SA names, you ma
 
 * If you want to use the manually created service file also, run the following.
 ```
-python gen_sa.py ----generate-keys -pid <project ID>
+python gen_sa.py --generate-keys -pid <project ID>
 ```
 
 * Else, follow through with the following to create and save keys to the newly created service accounts.
 ```
-python gen_sa.py ----generate-keys -pid <project ID> -sp <same prefix as above>
+python gen_sa.py --generate-keys -pid <project ID> -sp <same prefix as above>
 ```
 
 
