@@ -9,7 +9,7 @@ Many thanks to [Rclone](https://rclone.org/) and [folderclone](https://github.co
 
 Step 1. Copy code to your VPS or local machine
 ---------------------------------
-_Before everything, install python3 because we use python as our programing language._
+_Before everything, install python because we use python as our programing language._
 
 ### For Linux system
 Install
@@ -69,7 +69,7 @@ If you don't know your project ID, click on the dropdown that is to thje right o
 ```
 python gen_sa.py --list-projects
 ```
-_Run `python3 gen_sa.py -h` for help with flags._
+_Run `python gen_sa.py -h` for help with flags._
 
 Step 3. [Optional] Add service accounts to Google Groups
 ---------------------------------
@@ -84,7 +84,7 @@ We use Google Groups to manager our service accounts, keeping in mind the [offic
 
 3. Run ```python add_to_google_group.py -g email@example.com```
 
-_Run `python3 add_to_google_group.py -h` for help with flags._
+_Run `python add_to_google_group.py -h` for help with flags._
 
 ### For normal user
 Create a [Google Group](https://groups.google.com/) and then add the service accounts as members from `/accounts/sas-list.txt`. You may add 10 at a time to avoid captha. The total [limit](https://support.google.com/a/answer/6099642?hl=en#zippy=%2Cgroup-creation-join-requests-and-invitations%2Cmembership%2Climits-related-to-trial-accounts) is 200 a day and optimistically, you would have a good leeway. 
@@ -99,9 +99,9 @@ If you have already created Google Groups in **Step 2**, add the group email add
  
 Otherwise, add service accounts directly into Team Drive. You may use the following code or add it manually in the web UI.
 > - Add service accounts into your source Team Drive:
-`python3 add_to_team_drive.py -d SharedTeamDriveSrcID`
+`python add_to_team_drive.py -d SharedTeamDriveSrcID`
 > - Add service accounts into your destination Team Drive:
-`python3 add_to_team_drive.py -d SharedTeamDriveDstID`
+`python add_to_team_drive.py -d SharedTeamDriveDstID`
 
 Step 5. Start your task
 ---------------------------------
@@ -114,7 +114,7 @@ Let us copy hundreds of TiB using service accounts. **Note the sarcasm**; Over a
 - [ ] Team drive to publicly shared folder.
 
 ```
-python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName -b 1 -e 600
+python rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
 * _For meaning of above flags, please run `python rclone_sa_magic.py -h`_.
 
@@ -131,7 +131,7 @@ rclone --config rclone.conf size --disable ListR dst001:
 - [ ] Local to private folder.
 - [ ] Private folder to any.
 ```
-python3 rclone_sa_magic.py -sp YourLocalPath -d DestinationID -dp DestinationPathName -b 1 -e 600
+python rclone_sa_magic.py -sp YourLocalPath -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
 
 * (Linux only) Run command `tail -f log_rclone.txt` to see what happens in details.
