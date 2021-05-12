@@ -67,7 +67,7 @@ python gen_sa.py --generate-keys -pid <project ID> -sp <same prefix as above>
 ```
 
 
-If you don't know your project ID, click on the dropdown right of "Google Cloud Platform" [here](https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
+If you don't know your project ID, click on the dropdown that is to thje right of "Google Cloud Platform" [here](https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
 
 ```
 python gen_sa.py --list-projects
@@ -95,7 +95,8 @@ Create a [Google Group](https://groups.google.com/) and then add the service acc
 Step 4. Add service accounts or Google Groups into Team Drive
 ---------------------------------
 _If you do not use Team Drive, just skip._
-**Warning:** It is **NOT** recommended to use service accounts to clone "to" folders that are not in teamdrives, SA work best for teamdrives. 
+
+**Warning:** It is **NOT** recommended to use service accounts to clone to folders that are not in teamdrives; service accounts work best with teamdrives. 
 
 If you have already created Google Groups (**Step 2**) to manager your service accounts, add the group address `sa@yourdomain.com` or `sa@googlegroups.com` to your source Team Drive (tdsrc) and destination Team Drive (tddst). 
  
