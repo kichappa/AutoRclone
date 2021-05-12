@@ -11,6 +11,7 @@ token.pickle
 client*.apps.googleusercontent.com.json
 credentials.json
 python-controller.json
+kichappa read me.txt
 rclone_sa.py
 log_rclone.txt
 log*.txt
