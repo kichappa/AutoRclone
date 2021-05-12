@@ -55,7 +55,7 @@ Since each project service account count capped to 100, we can create 99 more se
 python gen_sa.py --create-sas -pid <project ID> -sp <prefix for SA names, you may ignore> -sc 99
 ```
 
-If you don't know your project ID, click on the dropdown right of "Google Cloud Platform" [here] (https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
+If you don't know your project ID, click on the dropdown right of "Google Cloud Platform" [here](https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
 
 ```
 python gen_sa.py --list-projects
