@@ -98,11 +98,9 @@ _If you do not use Team Drive, skip ahead._
 
 **Warning:** It is **NOT** recommended to use service accounts to clone to folders that are not in teamdrives; service accounts work best with teamdrives. 
 
-If you have already created Google Groups (**Step 2**) to manager your service accounts, add the group address `sa@yourdomain.com` or `sa@googlegroups.com` to your source Team Drive (tdsrc) and destination Team Drive (tddst). 
+If you have already created Google Groups in **Step 2**, add the group email address `email@example.com` or `groupID@googlegroups.com` to your source team drive (`src001`) and destination team drive (`dst001`). 
  
-Otherwise, add service accounts directly into Team Drive.
-> Enable the Drive API in [Python Quickstart](https://developers.google.com/drive/api/v3/quickstart/python) 
-and save the `credentials.json` into project root path if you have not done it in **Step 2**.
+Otherwise, add service accounts directly into Team Drive. You may use the following code or add it manually in the web UI.
 > - Add service accounts into your source Team Drive:
 `python3 add_to_team_drive.py -d SharedTeamDriveSrcID`
 > - Add service accounts into your destination Team Drive:
@@ -110,43 +108,37 @@ and save the `credentials.json` into project root path if you have not done it i
 
 Step 5. Start your task
 ---------------------------------
-Let us copy hundreds of TB resource using service accounts. 
-**Note**: Sarcasm, over abuse of this (regardless of what cloning script you use) may get you noticed by google, we recommend you dont be a glutton and clone what is important instead of downloading entire wikipedia.
+Let us copy hundreds of TiB using service accounts. **Note the sarcasm**; Over abuse of this, regardless of what cloning script you use, may get noticed by google. We recommend you do not be a glutton and clone what is important, instead of downloading the entire wikipedia.
 
-#### For server side copy
-- [x] publicly shared folder to Team Drive
-- [x] Team Drive to Team Drive
-- [ ] publicly shared folder to publicly shared folder (with write privilege)
-- [ ] Team Drive to publicly shared folder
+### For server side copy
+- [x] Publicly shared folder to team drive (with write privilege).
+- [x] Team drive to team drive.
+- [ ] publicly shared folder to publicly shared folder (with write privilege).
+- [ ] Team drive to publicly shared folder.
+
 ```
 python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
-- _For meaning of above flags, please run python3 rclone_sa_magic.py -h_
+* _For meaning of above flags, please run python3 rclone_sa_magic.py -h_
 
-- _Add `--disable_list_r` if `rclone` [cannot read all contents of public shared folder](https://forum.rclone.org/t/rclone-cannot-see-all-files-folder-in-public-shared-folder/12351)._
+* _Add `--disable_list_r` if RClone [cannot read all contents of public shared folder](https://forum.rclone.org/t/rclone-cannot-see-all-files-folder-in-public-shared-folder/12351)._
 
-- _Please make sure the Rclone can read your source and destination directory. Check it using `rclone size`:_
+* _Please make sure the Rclone can read your source and destination directory. Check it using `rclone size`:_
 
-1. ```rclone --config rclone.conf size --disable ListR src001:```
-
-2. ```rclone --config rclone.conf size --disable ListR dst001:```
+```
+rclone --config rclone.conf size --disable ListR dst001:
+```
 
 #### For local to Google Drive (needs some testing)
-- [x] local to Team Drive
-- [ ] local to private folder
-- [ ] private folder to any (think service accounts cannot do anything about private folder)
+- [x] Local to team drive.
+- [ ] Local to private folder.
+- [ ] Private folder to any.
 ```
 python3 rclone_sa_magic.py -sp YourLocalPath -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
 
-* Run command `tail -f log_rclone.txt` to see what happens in details (linux only).
+* (Linux only) Run command `tail -f log_rclone.txt` to see what happens in details.
 
 ![](AutoRclone.jpg)
 
-Also let's talk about this project in Telegram Group [AutoRclone](https://t.me/AutoRclone)
-
-[Blog（中文）](Blog (中文) 
-https://gsuitems.com/index.php/archives/13/) | [Google Drive Group](https://t.me/google_drive) | [Google Drive Channel](https://t.me/gdurl)  
-
-
-
+### Have a great day!
