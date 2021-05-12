@@ -39,7 +39,7 @@ Let us create only the amount of service accounts that we need.
 **Warning:** Abuse of this feature is not the aim of autorclone and we do **NOT** recommend that you make a lot of projects. Creating just one project and 100 service accounts is plenty. Abuse of this service might get your projects banned by Google. 
 
 Create a project and enable the following APIs. You can do this [here](https://developers.google.com/workspace/guides/create-project).
-* Google Drive API.
+* Google Drive API,
 * Resource Manager API.
 
 Create one service account as shown in the "Console" tab [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts?authuser=4#creating). Name it anything, add description if you feel so; it doesn't matter. Now, create keys for it as shown [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys?authuser=4#creating_service_account_keys). Save the JSON file as "credentials.json" in this project folder.
@@ -116,7 +116,7 @@ Let us copy hundreds of TiB using service accounts. **Note the sarcasm**; Over a
 ```
 python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName -b 1 -e 600
 ```
-* _For meaning of above flags, please run python3 rclone_sa_magic.py -h_
+* _For meaning of above flags, please run `python rclone_sa_magic.py -h`_.
 
 * _Add `--disable_list_r` if Rclone [cannot read all contents of public shared folder](https://forum.rclone.org/t/rclone-cannot-see-all-files-folder-in-public-shared-folder/12351)._
 
