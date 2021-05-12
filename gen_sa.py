@@ -1,3 +1,7 @@
+# Created by kichappa on 12 May 2021
+# A tool to create Google service accounts.
+
+
 import argparse
 import os
 
@@ -167,15 +171,13 @@ if __name__ == '__main__':
 
     #argument parser
     parser=argparse.ArgumentParser(description="A tool to create Google service accounts.")
-    createSas=parser.add_argument_group("create service accounts.")
-    createSas.add_argument('--create-sas', action="store_true")
+    parser.add_argument('--create-sas', action="store_true", help='create service accounts.')
     parser.add_argument('-pid', '--proj-id', type=str, help="the name id of the project.")
-    parser.add_argument('-sp', '--sas-prefix', default='', help="the prefix to the name(s) of the service accounts to be created.")
-    createSas.add_argument('-sc', '--sas-count', type=int, default=99, help="the number of service accounts to be created.")
+    parser.add_argument('-sp', '--sas-prefix', default='', help="the prefix to the name(s) of the service accounts.")
+    parser.add_argument('-sc', '--sas-count', type=int, default=99, help="the number of service accounts to be created.")
     parser.add_argument('--list-projects', action="store_true", help="list projects in Google cloud.")
     parser.add_argument('--list-sas', action="store_true", help="list sas in Google cloud.")
-    generateKeys=parser.add_argument_group("generate keys for prefixed service accounts.")
-    generateKeys.add_argument('--generate-keys', action="store_true")
+    parser.add_argument('--generate-keys', action="store_true", help='generate keys for prefixed service accounts')
     args = parser.parse_args()
 
     if args.create_sas:
