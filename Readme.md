@@ -1,17 +1,18 @@
 # AutoRclone: rclone copy/move/sync (automatically) with service accounts (still in the beta stage)
-Many thanks for [rclone](https://rclone.org/) and [folderclone](https://github.com/Spazzlo/folderclone).
+Many thanks to [rclone](https://rclone.org/) and [folderclone](https://github.com/Spazzlo/folderclone) for making this possible.
 
-- [x] create service accounts using script
-- [x] add massive service accounts into rclone config file
-- [x] add massive service accounts into groups for your organization
-- [x] automatically switch accounts when rclone copy/move/sync 
-- [x] Windows system is supported
+- [x] Create service accounts using script.
+- [x] Add massive service accounts into rclone config file.
+- [x] Add massive service accounts into groups for your organization.
+- [x] Automatically switch accounts when rclone copy/move/sync.
+- [x] Windows system is supported.
 
 Step 1. Copy code to your VPS or local machine
 ---------------------------------
-_Before everything, install python3. Because we use python as our programing language._
+_Before everything, install python3 because we use python as our programing language._
 
-**For Linux system**: Install
+##For Linux system
+Install
 [screen](https://www.interserver.net/tips/kb/using-screen-to-attach-and-detach-console-sessions/),
 `git` 
 and [latest rclone](https://rclone.org/downloads/#script-download-and-install). 
@@ -23,72 +24,60 @@ After all dependency above are successfully installed, run this command
 ```
 sudo git clone https://github.com/xyou365/AutoRclone && cd AutoRclone && sudo pip3 install -r requirements.txt
 ```
-**For Windows system**: Directly download this project then [install latest rclone](https://rclone.org/downloads/). 
-Then run this command (type in cmd command windows or PowerShell windows) in our project folder
+##For Windows system
+Directly download this project, download and copy [latest rclone](https://rclone.org/downloads/) into PATH. Then, run the following command in a commandline initialized inside your AutoRClone (this project) folder.
 ```
 pip3 install -r requirements.txt
 ```
 
-Step 2. Generate service accounts [What is service account](https://cloud.google.com/iam/docs/service-accounts) [How to use service account in rclone](https://rclone.org/drive/#service-account-support).
+Step 2. Generate service accounts
 ---------------------------------
-Let us create only the service accounts that we need. 
-**Warning:** abuse of this feature is not the aim of autorclone and we do **NOT** recommend that you make a lot of projects, just one project and 100 sa allow you plenty of use, its also possible that overabuse might get your projects banned by google. 
 
+[What is service account?](https://cloud.google.com/iam/docs/service-accounts) 
 
-Enable the Drive API in [Python Quickstart](https://developers.google.com/drive/api/v3/quickstart/python)
-and save the file `credentials.json` into project directory.
+[How to use service account in rclone?](https://rclone.org/drive/#service-account-support)
 
-If you do not have any project in your account then 
-* create 1 projec
-* enable the required services
-* create 100 (1 project, each with 100) Service Accounts
-* and download their credentials into a folder named `accounts`
+Let us create only the amount of service accounts that we need. 
+
+**Warning:** Abuse of this feature is not the aim of autorclone and we do **NOT** recommend that you make a lot of projects. Creating just one project and 100 service accounts is plenty. Abuse of this service might get your projects banned by Google. 
+
+Create a project and enable the following APIs. You can do this [here](https://developers.google.com/workspace/guides/create-project).
+..* Google Drive API.
+..* Resource Manager API.
+
+Create one service account as shown in the "Console" tab [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts?authuser=4#creating). Name it anything, add description if you feel so; it doesn't matter. Now, create keys for it as shown [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys?authuser=4#creating_service_account_keys). Save the JSON file as "credentials.json" in this project folder.
+
+**Note.** Each service account can copy about 750GiB a day. 99 service accounts hence allows 75TiB of data transfer a day.
+
+Since each project service account count capped to 100, we can create 99 more service accounts. You may leave the service accounted created above by itself. Create 99 service accounts as follows. 
 
 ```
-Note: 1 service account can copy around 750gb a day, 1 project makes 100 service accounts so thats 75tb a day, for most users this should easily suffice. 
+python gen_sa.py --create-sas -pid <project ID> -sp <prefix for SA names, you may ignore> -sc 99
 ```
 
-The command would look something like 
- `python3 gen_sa_accounts.py --quick-setup 1`
- replace "1" with the number of projects you want
+If you don't know your project ID, click on the dropdown right of "Google Cloud Platform" [here] (https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
 
-If you have already N projects and want to create service accounts only in newly created projects,
+```
+python gen_sa.py --list-projects
+```
 
-to 
-* create additional 1 project (project N+1 to project N+2)
-* enable the required services
-* create 100 (1 project, with 100) Service Accounts
-* and download their credentials into a folder named `accounts`
- 
-run 
-
-`python3 gen_sa_accounts.py --quick-setup 1 --new-only` 
-
-If you want to create some service accounts using existing projects (do not create more projects), run 
-`python3 gen_sa_accounts.py --quick-setup -1`.
-Note that this will overwrite the existing service accounts.
-
-After it is finished, there will be many json files in one folder named `accounts`. 
-
-
-Step 3. Add service accounts to Google Groups (Optional but recommended for hassle free long term use)
+Step 3. [Optional] Add service accounts to Google Groups
 ---------------------------------
-We use Google Groups to manager our service accounts considering the  
-[Official limits to the members of Team Drive](https://support.google.com/a/answer/7338880?hl=en) (Limit for individuals and groups directly added as members: 600).
+_This step is recommended for hassle free, long term use, but is optional._
 
-#### For GSuite Admin
-1. Turn on the Directory API following [official steps](https://developers.google.com/admin-sdk/directory/v1/quickstart/python) (save the generated json file to folder `credentials`).
+We use Google Groups to manager our service accounts, keeping in mind the [official limits pertinent.](https://support.google.com/a/answer/7338880?hl=en).
 
-2. Create group for your organization [in the Admin console](https://support.google.com/a/answer/33343?hl=en). After create a group, you will have an address for example`sa@yourdomain.com`.
+## For GSuite Admin
+1. Turn on the Directory API [here](https://developers.google.com/admin-sdk/directory/v1/quickstart/python). Save the generated JSON file to the `credentials` folder.
 
-3. Run `python3 add_to_google_group.py -g sa@yourdomain.com`
+2. Create group for your organization in the [admin console](https://support.google.com/a/answer/33343?hl=en). You will have an address to the newly created Google Group, say, `email@example.com`.
 
-_For meaning of above flags, please run `python3 add_to_google_group.py -h`_
+3. Run ```python add_to_google_group.py -g email@example.com```
 
-#### For normal user
+_Run `python3 add_to_google_group.py -h` for help with flags._
 
-Create [Google Group](https://groups.google.com/) then add the service accounts as members by hand.
-Limit is 10 at a time, 100 a day but if you read our warning and notes above, you would have 1 project and hence easily in your range. 
+## For normal user
+Create a [Google Group](https://groups.google.com/) and then add the service accounts as members from `/accounts/sas-list.txt`. You may add 10 at a time to avoid captha. The total [limit](https://support.google.com/a/answer/6099642?hl=en#zippy=%2Cgroup-creation-join-requests-and-invitations%2Cmembership%2Climits-related-to-trial-accounts) is 200 a day and optimistically, you would have a good leeway. 
 
 Step 4. Add service accounts or Google Groups into Team Drive
 ---------------------------------

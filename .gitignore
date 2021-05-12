@@ -2,6 +2,7 @@
 /folderclone-master
 /.idea
 /accounts/*
+/accounts1/*
 # /controller/*
 /credentials/*
 rclone.conf
@@ -9,6 +10,7 @@ rclone*.conf
 token.pickle
 client*.apps.googleusercontent.com.json
 credentials.json
+python-controller.json
 rclone_sa.py
 log_rclone.txt
 log*.txt
