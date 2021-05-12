@@ -1,0 +1,221 @@
+commit 825dd65e1de3b2a1d3926659194298f10b611923
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Mon Apr 26 08:32:21 2021 +0100
+
+    Version v1.55.1
+
+commit 96cdbc5eaae3189b2f9160cf9849f715f641365e
+Author: OleFrost <82263101+olefrost@users.noreply.github.com>
+Date:   Sat Apr 24 11:44:13 2021 +0200
+
+    onedrive: Work around for random "Unable to initialize RPS" errors
+    
+    OneDrive randomly returns the error message: "InvalidAuthenticationToken: Unable to initialize RPS". These unexpected errors typically caused the entire rclone command to fail.
+    
+    This work around recognizes these errors and marks them for a low level retry, that mostly succeeds. This will make rclone commands complete without being noticeable affected.
+    
+    Fixes: #5270
+
+commit baf626c1d0382ba64cbb46a08821d65647631185
+Author: buengese <buengese@protonmail.com>
+Date:   Thu Apr 22 17:21:42 2021 +0200
+
+    compress: fix compressed name regexp
+
+commit e8be37bebc7e0fb5bf375cbf7de2ab0679f94329
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Apr 20 17:40:06 2021 +0100
+
+    build: fix version numbers in android branch builds
+
+commit e67ac64f518799238ff76d4beeeec8b9d512d40b
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Mon Apr 19 15:38:01 2021 +0100
+
+    dropbox: fix Unable to decrypt returned paths from changeNotify - fixes #5165
+    
+    This was caused by incorrect use of strings.TrimLeft where
+    strings.TrimPrefix was required.
+
+commit c86fc6e05d79f7751243b66e2ed37702398efc8a
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Mon Apr 19 23:10:16 2021 +0100
+
+    vfs: fix a code path which allows dirty data to be removed causing data loss
+    
+    Before this change the VFS layer could remove a locally cached file
+    even if it had data which needed to be written back, thus causing data loss.
+    
+    See: https://forum.rclone.org/t/rclone-1-55-doesnt-save-file-changes-if-the-file-has-been-reopened-during-upload-google-drive-mount/23646
+
+commit a6cab5d0e9170b2e868fe03cbbcd7a56b9019244
+Author: Ansh Mittal <iamAnshMittal@gmail.com>
+Date:   Tue Apr 13 19:41:36 2021 +0530
+
+    drive: don't open browser when service account...
+    
+    credentials specified
+    
+    Fixes #5104
+
+commit 0d8c69b4ea50cb70e8a2be21ad89fae2c54b4cd1
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Sat Apr 17 16:28:44 2021 +0100
+
+    dropbox: add missing team_data.member scope for use with --impersonate
+    
+    See: https://forum.rclone.org/t/dropbox-business-not-accepting-oauth2/23390/32
+
+commit 07f4b9832d45d54e91eb549e4a26afd36f8d1513
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Apr 13 11:43:00 2021 +0100
+
+    dropbox: fix About after scopes changes - rclone config reconnect needed
+    
+    This adds the missing scope for the About call. To use it it will be
+    necessary to refresh the token with `rclone config reconnect`.
+    
+    See: https://forum.rclone.org/t/dropbox-too-many-requests-or-write-operations-trying-again-in-15-seconds/23316/33
+
+commit c764ab2751c7862e25a0c92ffdd6f65b895808d8
+Author: Ivan Andreev <ivandeex@gmail.com>
+Date:   Fri Apr 9 01:43:50 2021 +0300
+
+    backend/ftp: fix implicit TLS after PR #4266 (#5219)
+    
+    PR #4266 modified ftpConnection to make ftp library into using
+    a custom dial function which is QoS aware and takes care of TLS.
+    However the ServerConn.Login function from the ftp library also needs
+    TLS config passed explicitly as a trigger for sending PSBZ and PROT
+    options to FTP server. This was not taken care of resulting in
+    failure to connect via FTP with implicit TLS.
+    This PR fixes that.
+    
+    Fixes #5210
+
+commit 563c4f76c66675e6dec19a2834878336a9313966
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Tue Apr 6 12:59:36 2021 +0100
+
+    sync: fix incorrect error reported by graceful cutoff - fixes #5203
+    
+    Before this change, a sync which was finished with a graceful transfer
+    cutoff could return "context canceled" instead of the correct error.
+    
+    This fixes the problem by ignoring "context canceled" errors if we
+    have done a graceful stop.
+
+commit 2f6afe600567f205b03bccf98110a6c404f06bef
+Author: albertony <12441419+albertony@users.noreply.github.com>
+Date:   Thu Apr 8 10:19:03 2021 +0200
+
+    docs: fixed some typos
+
+commit b30d7a026f6c8e1c4f90ba549d107c62e227f56a
+Author: buengese <buengese@protonmail.com>
+Date:   Tue Apr 6 22:25:01 2021 +0200
+
+    zoho: do not ask for mountpoint twice when using headless setup
+
+commit 1a5e67fe98a23012bb3549aa9746b7f61cb8e522
+Author: albertony <12441419+albertony@users.noreply.github.com>
+Date:   Wed Apr 7 08:47:29 2021 +0200
+
+    docs: minor cleanup of space around code section
+
+commit 2d210c27295c7eede594081f53b54fa89b5f8fe2
+Author: albertony <12441419+albertony@users.noreply.github.com>
+Date:   Wed Apr 7 08:13:40 2021 +0200
+
+    docs: WinFsp 2021 is out of beta
+
+commit 5603983a5d77b4ccdf1d6eac42961ef762efdaf4
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Sat Apr 3 13:47:41 2021 +0100
+
+    drive: fix backend copyid of google doc to directory - fixes #5196
+    
+    Before this change the google doc was being copied to the directory
+    without an extension.
+
+commit 501475a3a32d2d7e10b3c4ee23bcac96e93e03a4
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Mon Apr 5 14:18:49 2021 +0100
+
+    sftp: fix Update ReadFrom failed: failed to send packet: EOF errors
+    
+    In
+    
+    a3fcadddc871e646 sftp: close idle connections after --sftp-idle-timeout (1m by default)
+    
+    Idle SFTP connections were closed after 1 minute. However due to the
+    way SSH multiplexes connections over a single SSH connection this
+    meant that if uploads or downloads went on for more than one minute
+    they failed with "EOF errors" as their underlying connection was
+    closed.
+    
+    This fixes the problem by not clearing idle connections if there are
+    any transfers in progress.
+    
+    Fixes #5197
+
+commit 958f5297fe04a98be92ed2945d48ccf3635bac0b
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Sat Apr 3 11:32:46 2021 +0100
+
+    sftp: revert sftp library to v1.12.0 from v1.13.0 to fix performance regression #5197
+    
+    This reverts the library update done in this commit.
+    
+    713f8f357dc5eb51 sftp: fix "file not found" errors for read once servers
+    
+    Reverting this commit triples the performance to a far away sftp server.
+    
+    See: https://github.com/pkg/sftp/issues/426
+
+commit 572c6ad601eac6634f1987aab6169c7f2cf06a02
+Author: buengese <buengese@protonmail.com>
+Date:   Mon Apr 5 15:11:30 2021 +0200
+
+    zoho: fix error when region isn't set
+
+commit 9e2e2bb5fcc6636b48fd30dae1e0c1f72431d263
+Author: Ivan Andreev <ivandeex@gmail.com>
+Date:   Sat Apr 3 14:39:04 2021 +0300
+
+    build: add build tag noselfupdate
+    
+    Allow downstream packaging to build rclone without selfupdate command:
+    $ go build -tags noselfupdate
+    
+    Fixes #5187
+
+commit 12d039261ff3c80233947838c0e0c679bd53e644
+Author: Nick Gaya <nicholasgaya+github@gmail.com>
+Date:   Sat Apr 3 15:07:52 2021 -0700
+
+    contributing.md: update setup instructions for go1.16
+
+commit 74be50ae923cea9f691fc8d6cc439847e41e99c9
+Author: Ivan Andreev <ivandeex@gmail.com>
+Date:   Sat Apr 3 14:13:29 2021 +0300
+
+    selfupdate: dont detect FUSE if build is static
+    
+    Before this patch selfupdate detected ANY build with cmount tag as a build
+    having libFUSE capabilities. However, only dynamic builds really have it.
+    The official linux builds are static and have the cmount tag as of the time
+    of this writing. This results in inability to update official linux binaries.
+    This patch fixes that. The build can be fixed independently.
+
+commit b0608d6f25af5bcd80865f6e2e34e93b9717bd60
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Wed Mar 31 21:02:55 2021 +0100
+
+    install.sh: fix macOS arm64 download - fixes #5183
+
+commit b60838221b3e6f4eea0cc0f9a4972278c3fa56f4
+Author: Nick Craig-Wood <nick@craig-wood.com>
+Date:   Wed Mar 31 21:49:02 2021 +0100
+
+    Start v1.55.1-DEV development

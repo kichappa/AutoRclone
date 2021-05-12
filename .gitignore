@@ -1,0 +1,25 @@
+# exclude everything
+/folderclone-master
+/.idea
+/accounts/*
+# /controller/*
+/credentials/*
+rclone.conf
+rclone*.conf
+token.pickle
+client*.apps.googleusercontent.com.json
+credentials.json
+rclone_sa.py
+log_rclone.txt
+log*.txt
+current_sa.txt
+accounts.zip
+accounts1k.zip
+accounts400.zip
+accounts600.zip
+
+# exception to the rule
+!credentials/.gsuite_only.txt
+!credentials/.keep
+!accounts/.keep
+# !controller/.keep
