@@ -60,6 +60,7 @@ If you don't know your project ID, click on the dropdown right of "Google Cloud 
 ```
 python gen_sa.py --list-projects
 ```
+_Run `python3 gen_sa.py -h` for help with flags._
 
 Step 3. [Optional] Add service accounts to Google Groups
 ---------------------------------
