@@ -1,10 +1,10 @@
-# AutoRclone: rclone with service accounts (beta stage)
-Many thanks to [rclone](https://rclone.org/) and [folderclone](https://github.com/Spazzlo/folderclone) for making this possible.
+# AutoRclone: Rclone with service accounts (beta stage)
+Many thanks to [Rclone](https://rclone.org/) and [folderclone](https://github.com/Spazzlo/folderclone) for making this possible.
 
 - [x] Create service accounts using script.
-- [x] Add massive service accounts into rclone config file.
+- [x] Add massive service accounts into Rclone config file.
 - [x] Add massive service accounts into groups for your organization.
-- [x] Automatically switch accounts when rclone copy/move/sync.
+- [x] Automatically switch accounts when Rclone copy/move/sync.
 - [x] Windows system is supported.
 
 Step 1. Copy code to your VPS or local machine
@@ -13,7 +13,7 @@ _Before everything, install python3 because we use python as our programing lang
 
 ### For Linux system
 Install
-[screen](https://www.interserver.net/tips/kb/using-screen-to-attach-and-detach-console-sessions/), [git](https://git-scm.com/downloads) and [latest rclone](https://rclone.org/downloads/#script-download-and-install). 
+[screen](https://www.interserver.net/tips/kb/using-screen-to-attach-and-detach-console-sessions/), [git](https://git-scm.com/downloads) and [latest Rclone](https://rclone.org/downloads/#script-download-and-install). 
 
 If you are in Debian or Ubuntu, directly use the following command.
 ```
@@ -24,7 +24,7 @@ After all dependency above are successfully installed, run this command
 sudo git clone https://github.com/xyou365/AutoRclone && cd AutoRclone && sudo pip3 install -r requirements.txt
 ```
 ### For Windows system
-Directly download this project, download and copy [latest rclone](https://rclone.org/downloads/) into PATH. Then, run the following command in a commandline initialized inside your AutoRClone (this project) folder.
+Directly download this project, download and copy [latest Rclone](https://rclone.org/downloads/) into PATH. Then, run the following command in a commandline initialized inside your AutoRClone (this project) folder.
 ```
 pip3 install -r requirements.txt
 ```
@@ -32,7 +32,7 @@ pip3 install -r requirements.txt
 Step 2. Generate service accounts
 ---------------------------------
 
-[What is service account?](https://cloud.google.com/iam/docs/service-accounts) [How to use service account in rclone?](https://rclone.org/drive/#service-account-support)
+[What is service account?](https://cloud.google.com/iam/docs/service-accounts) [How to use service account in Rclone?](https://rclone.org/drive/#service-account-support)
 
 Let us create only the amount of service accounts that we need. 
 
@@ -118,7 +118,7 @@ python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName 
 ```
 * _For meaning of above flags, please run python3 rclone_sa_magic.py -h_
 
-* _Add `--disable_list_r` if RClone [cannot read all contents of public shared folder](https://forum.rclone.org/t/rclone-cannot-see-all-files-folder-in-public-shared-folder/12351)._
+* _Add `--disable_list_r` if Rclone [cannot read all contents of public shared folder](https://forum.rclone.org/t/rclone-cannot-see-all-files-folder-in-public-shared-folder/12351)._
 
 * _Please make sure the Rclone can read your source and destination directory. Check it using `rclone size`:_
 
