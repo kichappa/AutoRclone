@@ -13,6 +13,7 @@ credentials.json
 python-controller.json
 kichappa read me.txt
 rclone_sa.py
+git-log.txt
 log_rclone.txt
 log*.txt
 current_sa.txt
@@ -20,6 +21,9 @@ accounts.zip
 accounts1k.zip
 accounts400.zip
 accounts600.zip
+rclone.1
+rclone.exe
+README.txt
 
 # exception to the rule
 !credentials/.gsuite_only.txt
