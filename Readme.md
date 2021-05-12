@@ -42,8 +42,8 @@ Let us create only the amount of service accounts that we need.
 **Warning:** Abuse of this feature is not the aim of autorclone and we do **NOT** recommend that you make a lot of projects. Creating just one project and 100 service accounts is plenty. Abuse of this service might get your projects banned by Google. 
 
 Create a project and enable the following APIs. You can do this [here](https://developers.google.com/workspace/guides/create-project).
-..* Google Drive API.
-..* Resource Manager API.
+* Google Drive API.
+* Resource Manager API.
 
 Create one service account as shown in the "Console" tab [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts?authuser=4#creating). Name it anything, add description if you feel so; it doesn't matter. Now, create keys for it as shown [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys?authuser=4#creating_service_account_keys). Save the JSON file as "credentials.json" in this project folder.
 
@@ -52,8 +52,18 @@ Create one service account as shown in the "Console" tab [here](https://cloud.go
 Since each project service account count capped to 100, we can create 99 more service accounts. You may leave the service accounted created above by itself. Create 99 service accounts as follows. 
 
 ```
-python gen_sa.py --create-sas -pid <project ID> -sp <prefix for SA names, you may ignore> -sc 99
+python gen_sa.py --create-sas -pid <project ID> -sp <prefix for SA names, you may ignore or use "mfc-" by default> -sc 99
 ```
+* If you want to use the manually created service file also, run the following.
+```
+python gen_sa.py ----generate-keys -pid <project ID>
+```
+
+* Else, follow through with the following to create and save keys to the newly created service accounts.
+```
+python gen_sa.py ----generate-keys -pid <project ID> -sp <same prefix as above>
+```
+
 
 If you don't know your project ID, click on the dropdown right of "Google Cloud Platform" [here](https://console.cloud.google.com/). You can see the list of projects and their corresponding IDs. You need the ID of the project you created above. You may also use the following to list all the projects in your Google Cloud.
 
