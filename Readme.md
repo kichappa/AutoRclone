@@ -94,7 +94,7 @@ Create a [Google Group](https://groups.google.com/) and then add the service acc
 
 Step 4. Add service accounts or Google Groups into Team Drive
 ---------------------------------
-_If you do not use Team Drive, just skip._
+_If you do not use Team Drive, skip ahead._
 
 **Warning:** It is **NOT** recommended to use service accounts to clone to folders that are not in teamdrives; service accounts work best with teamdrives. 
 
