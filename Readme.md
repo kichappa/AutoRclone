@@ -14,7 +14,8 @@ _Before everything, install python3 because we use python as our programing lang
 ### For Linux system
 Install
 [screen](https://www.interserver.net/tips/kb/using-screen-to-attach-and-detach-console-sessions/), [git](https://git-scm.com/downloads) and [latest rclone](https://rclone.org/downloads/#script-download-and-install). 
-If in Debian/Ubuntu, directly use this command
+
+If you are in Debian or Ubuntu, directly use the following command.
 ```
 sudo apt-get install screen git && curl https://rclone.org/install.sh | sudo bash
 ```
