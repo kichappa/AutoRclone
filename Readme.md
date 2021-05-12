@@ -67,7 +67,7 @@ _This step is recommended for hassle free, long term use, but is optional._
 
 We use Google Groups to manager our service accounts, keeping in mind the [official limits pertinent.](https://support.google.com/a/answer/7338880?hl=en).
 
-## For GSuite Admin
+### For GSuite Admin
 1. Turn on the Directory API [here](https://developers.google.com/admin-sdk/directory/v1/quickstart/python). Save the generated JSON file to the `credentials` folder.
 
 2. Create group for your organization in the [admin console](https://support.google.com/a/answer/33343?hl=en). You will have an address to the newly created Google Group, say, `email@example.com`.
@@ -76,7 +76,7 @@ We use Google Groups to manager our service accounts, keeping in mind the [offic
 
 _Run `python3 add_to_google_group.py -h` for help with flags._
 
-## For normal user
+### For normal user
 Create a [Google Group](https://groups.google.com/) and then add the service accounts as members from `/accounts/sas-list.txt`. You may add 10 at a time to avoid captha. The total [limit](https://support.google.com/a/answer/6099642?hl=en#zippy=%2Cgroup-creation-join-requests-and-invitations%2Cmembership%2Climits-related-to-trial-accounts) is 200 a day and optimistically, you would have a good leeway. 
 
 Step 4. Add service accounts or Google Groups into Team Drive
