@@ -129,7 +129,7 @@ python3 rclone_sa_magic.py -s SourceID -d DestinationID -dp DestinationPathName 
 rclone --config rclone.conf size --disable ListR dst001:
 ```
 
-#### For local to Google Drive (needs some testing)
+### For local to Google Drive (needs some testing)
 - [x] Local to team drive.
 - [ ] Local to private folder.
 - [ ] Private folder to any.
