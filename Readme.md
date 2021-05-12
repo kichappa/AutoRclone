@@ -33,9 +33,7 @@ pip3 install -r requirements.txt
 Step 2. Generate service accounts
 ---------------------------------
 
-[What is service account?](https://cloud.google.com/iam/docs/service-accounts) 
-
-[How to use service account in rclone?](https://rclone.org/drive/#service-account-support)
+[What is service account?](https://cloud.google.com/iam/docs/service-accounts) [How to use service account in rclone?](https://rclone.org/drive/#service-account-support)
 
 Let us create only the amount of service accounts that we need. 
 
