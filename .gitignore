@@ -24,6 +24,8 @@ accounts600.zip
 rclone.1
 rclone.exe
 README.txt
+.gitignore
+test.py
 
 # exception to the rule
 !credentials/.gsuite_only.txt
