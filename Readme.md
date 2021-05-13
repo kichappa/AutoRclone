@@ -40,7 +40,8 @@ Let us create only the amount of service accounts that we need.
 
 Create a project and enable the following APIs. You can do this [here](https://developers.google.com/workspace/guides/create-project).
 * Google Drive API,
-* Resource Manager API.
+* Cloud Resource Manager API,
+* Identity and Access Management (IAM) API.
 
 Create one service account as shown in the "Console" tab [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts?authuser=4#creating). Name it anything, add description if you feel so; it doesn't matter. Now, create keys for it as shown [here](https://cloud.google.com/iam/docs/creating-managing-service-account-keys?authuser=4#creating_service_account_keys). Save the JSON file as "credentials.json" in this project folder.
 

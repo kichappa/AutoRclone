@@ -32,10 +32,39 @@ def _list_projects():
         
     service = googleapiclient.discovery.build(
         'cloudresourcemanager', 'v1', credentials=credentials)
+    
+    return service.projects().list().execute()
+    # return [i['projectId'] for i in service.projects().list().execute()['projects']]
 
-    return [i['projectId'] for i in service.projects().list().execute()['projects']]
+def list_keys(service_account_email):
+    """Lists all keys for a service account."""
 
+    credentials = service_account.Credentials.from_service_account_file(
+        filename=os.environ['GOOGLE_APPLICATION_CREDENTIALS'],
+        scopes=['https://www.googleapis.com/auth/cloud-platform'])
 
+    service = googleapiclient.discovery.build(
+        'iam', 'v1', credentials=credentials)
+
+    keys = service.projects().serviceAccounts().keys().list(
+        name='projects/-/serviceAccounts/' + service_account_email).execute()
+
+    return [key['name'] for key in keys['keys']]
+
+def delete_key(full_key_name):
+    """Deletes a service account key."""
+
+    credentials = service_account.Credentials.from_service_account_file(
+        filename=os.environ['GOOGLE_APPLICATION_CREDENTIALS'],
+        scopes=['https://www.googleapis.com/auth/cloud-platform'])
+
+    service = googleapiclient.discovery.build(
+        'iam', 'v1', credentials=credentials)
+
+    service.projects().serviceAccounts().keys().delete(
+        name=full_key_name).execute()
+
+    # print('Deleted key: ' + full_key_name)
 
 def create_service_account(project_id, name, display_name):
     """Creates a service account."""
@@ -128,10 +157,12 @@ def _generate_keys(project_id, prefix):
         if(account['displayName'][0:len(prefix)]==prefix):
             prefix_sas.append(account)
 
-    print("Length of mfc sas =", len(prefix_sas))
+    print("Length of {} sas =".format(prefix), len(prefix_sas))
 
     i=0
     sas_list_string = ""
+    if not os.path.isdir('%s\\accounts\\' % pathlib.Path().absolute()):
+        os.mkdir('%s\\accounts\\' % pathlib.Path().absolute())
     sas_list = open('%s\\accounts\\sas-list.txt' % pathlib.Path().absolute(), 'w+')
     sas_list.close()
     for sas in prefix_sas:
@@ -160,9 +191,34 @@ def _list_sas(project_id, prefix=""):
             if(account['displayName'][0:len(prefix)]==prefix):
                 prefix_sas.append(account)
         total_sas=prefix_sas
-    i=0
     return[sas['email'] for sas in total_sas]
 
+def _list_sas_keys(total_sas, prefix=""):
+    # if not prefix=="":
+    #     prefix_sas=[]
+    #     for account in total_sas:
+    #         if(account['displayName'][0:len(prefix)]==prefix):
+    #             prefix_sas.append(account)
+    #     total_sas=prefix_sas
+    key_names=[]
+    for sas in total_sas:
+        keys=list_keys(sas)
+        for key in keys:
+            key_names.append(key)
+        # print(sas)
+        # print(list_keys(sas))
+    return key_names
+
+def _delete_keys(key_names):
+    for key in key_names:
+        try:
+            delete_key(key)
+        except:
+            pass
+            # print("skipping key {}".format(key))
+
+def _delete_sas_keys(project_id, prefix=""):
+    _delete_keys(_list_sas_keys(_list_sas(project_id, prefix=prefix)))
 
 if __name__ == '__main__':
 
@@ -177,14 +233,15 @@ if __name__ == '__main__':
     parser.add_argument('-sc', '--sas-count', type=int, default=99, help="the number of service accounts to be created.")
     parser.add_argument('--list-projects', action="store_true", help="list projects in Google cloud.")
     parser.add_argument('--list-sas', action="store_true", help="list sas in Google cloud.")
-    parser.add_argument('--generate-keys', action="store_true", help='generate keys for prefixed service accounts')
+    parser.add_argument('--generate-keys', action="store_true", help='generate keys for prefixed service accounts')    
+    parser.add_argument('--delete-sas-keys', action="store_true", help='delete all keys for prefixed service accounts')
     args = parser.parse_args()
 
     if args.create_sas:
         if args.sas_prefix=='':
-            print("Creating {} sas under the project \"{}\" without any prefix".format(args.sas_count, args.proj_id))
+            print("Creating {} sas under the project \"{}\" without any prefix.".format(args.sas_count, args.proj_id))
         else:
-            print("Creating {} sas under the project \"{}\" with prefix \"{}\"".format(args.sas_count, args.proj_id, args.sas_prefix))
+            print("Creating {} sas under the project \"{}\" with a prefix \"{}\".".format(args.sas_count, args.proj_id, args.sas_prefix))
         _create_sas(args.proj_id, args.sas_prefix, args.sas_count)
     elif args.list_projects:
         print("Your projects:\n", _list_projects())
@@ -192,20 +249,26 @@ if __name__ == '__main__':
         if args.sas_prefix=='':
             print("Creating keys for sas under the project \"{}\" without prefix filtering.".format(args.proj_id))
         else:
-            print("Creating keys for sas under the project \"{}\" with prefix \"{}\"".format(args.proj_id, args.sas_prefix))
+            print("Creating keys for sas under the project \"{}\" with a prefix \"{}\".".format(args.proj_id, args.sas_prefix))
         _generate_keys(args.proj_id, args.sas_prefix)
     elif args.list_sas:
         if args.sas_prefix=='':
-            print("Listing sas that are under the project \"{}\"".format(args.proj_id))
+            print("Listing sas that are under the project \"{}\".".format(args.proj_id))
         else:
-            print("Listing sas that are under the project \"{}\" with prefix \"{}\"".format(args.proj_id, args.sas_prefix))
+            print("Listing sas that are under the project \"{}\" with a prefix \"{}\".".format(args.proj_id, args.sas_prefix))
         print(*_list_sas(args.proj_id, args.sas_prefix), sep='\n')
+    if args.create_sas:
+        if args.sas_prefix=='':
+            print("Deleting all sas keys under the project \"{}\" without any prefix filtering.".format(args.proj_id))
+        else:
+            print("Deleting all sas keys under the project \"{}\" with a prefix \"{}\"".format(args.proj_id, args.sas_prefix))
+        _delete_keys(_list_sas_keys(_list_sas(args.proj_id, args.sas_prefix)))
 
 
     # kichappa: Use functions as required
     # _create_sas(project_id, pref, 99)
-    # _generate_keys(project_id, pref)
-    # _list_projects()
-    # _list_sas(project_id=project_id)
-
+    # _generate_keys(project_id, prefix='mfc-')
+    # print(_list_projects())
+    # print(_list_sas_keys(_list_sas(project_id=project_id, prefix="mfc-")))
+    # _delete_keys(_list_sas_keys(_list_sas(project_id=project_id, prefix="mfc-")))
 
