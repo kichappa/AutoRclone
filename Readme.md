@@ -76,7 +76,7 @@ Step 3. [Optional] Add service accounts to Google Groups
 ---------------------------------
 _This step is recommended for hassle free, long term use, but is optional._
 
-We use Google Groups to manager our service accounts, keeping in mind the [official limits pertinent.](https://support.google.com/a/answer/7338880?hl=en).
+We use Google Groups to manager our service accounts, keeping in mind the [pertinent official limits](https://support.google.com/a/answer/7338880?hl=en).
 
 ### For GSuite Admin
 1. Turn on the Directory API [here](https://developers.google.com/admin-sdk/directory/v1/quickstart/python). Save the generated JSON file to the `credentials` folder.
